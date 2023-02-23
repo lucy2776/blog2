@@ -21,7 +21,8 @@ public class PrincipalDetailService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// User 타입 : 시큐리티의 기본 id:user, password:console창 사용 x
-		User principal = userRepository.findByUsername(username).orElseThrow(()->{
+		User principal = userRepository.findByUsername(username)
+				.orElseThrow(()->{
 					
 					return new UsernameNotFoundException("해당 사용자를 찾을 수 없습니다. \n입력된 사용자 : "+username);
 				});

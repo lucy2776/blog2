@@ -3,6 +3,7 @@ package com.cos.blog.model;
 import java.sql.Timestamp;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,9 +14,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -49,12 +52,14 @@ public class Board {
 	private User user; // = one 
 	// DB는 오브젝트 저장x. FK, 자바는 오브젝트 저장o
 	
-	@OneToMany(mappedBy="board", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="board", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE) // 게시글을 지울때 댓글을 전부 삭제
 	// 하나의 게시글에 여러 개의 답변을 달 수 있음
 	// mappedBy : 연관관계의 주인 x (FK x) -> DB 칼럼 만들지 x
 	// OneToMany의 기본 전략 : LAZY -> 필요할 때만 호출해서 쓸 수 있음(Board의 테이블에 생성되는 FK x)
 //	@JoinColumn(name="replyId")
-	private List<Reply> reply;
+	@JsonIgnoreProperties({"board"})
+	@OrderBy("id asc")
+	private List<Reply> replys;
 	
 	@CreationTimestamp
 	private Timestamp createDate;

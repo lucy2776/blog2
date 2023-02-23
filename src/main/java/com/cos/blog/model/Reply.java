@@ -13,11 +13,15 @@ import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.cos.blog.dto.ReplySaveRequestDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.Data;
 
+@ToString
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -44,5 +48,11 @@ public class Reply {
 	
 	@CreationTimestamp
 	private Timestamp createDate;
+	
+//	public void update(User user, Board board, String content) {
+//		setUser(user);
+//		setBoard(board);
+//		setContent(content);
+//	}
 	
 }

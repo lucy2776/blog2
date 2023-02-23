@@ -14,7 +14,9 @@
 		</div>
 	</form>
 
-		<button id="btn-save" class="btn btn-primary">글 작성</button>
+	<div class="d-flex justify-content-end">
+		<button id="btn-save" class="btn btn-primary">작성</button>
+	</div>
 </div>
 
 <script src="/js/board.js"></script>
@@ -25,5 +27,7 @@
         height: 300
       });
 </script>
+
+<script src="	/js/board.js"></script>
 
 <%@include file="../layout/footer.jsp"%>

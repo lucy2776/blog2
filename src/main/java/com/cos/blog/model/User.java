@@ -34,7 +34,7 @@ public class User {
 	// MySQL : auto_increment(, oracle : 시퀀스)
 	private int id; 
 	
-	@Column(nullable=false, length=30, unique=true)
+	@Column(nullable=false, length=100, unique=true)
 	private String username; // 아이디
 	
 	@Column(nullable=false, length=100) // 1234 -> 해쉬(비밀번호 암호화)
@@ -48,6 +48,8 @@ public class User {
 	// DB에는 RoleType이라는 게 없다.
 	@Enumerated(EnumType.STRING) // 해당 enum = string 타입이라고 표시
 	private RoleType role;
+	
+	private String oauth; // kakao, googles
 	
 	@CreationTimestamp // 시간 자동 입력
 	private Timestamp createDate;

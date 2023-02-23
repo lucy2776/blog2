@@ -3,6 +3,12 @@ let index={
 		$("#btn-save").on("click", ()=>{ // (function(){} ->) ()=>{} this를 바인딩 하기 위해
 			this.save();
 		});
+		$("#btn-update").on("click", ()=>{ // (function(){} ->) ()=>{} this를 바인딩 하기 위해
+			this.update();
+		});
+		$("#btn-delete").on("click", ()=>{ // (function(){} ->) ()=>{} this를 바인딩 하기 위해
+			this.deleteById();
+		});
 		/*$("#btn-login").on("click", ()=>{ // (function(){} ->) ()=>{} this를 바인딩 하기 위해
 			this.login();
 		});*/
@@ -50,7 +56,6 @@ let index={
 		
 		// console.log(data);
 		
-		
 		// ajax 통신을 이용해서 3개의 데이터를 json으로 변경하여 insert 요청
 		
 		// ajax 을 사용하는 이유
@@ -69,14 +74,58 @@ let index={
 			// 요청 -> 서버로부터 응답이 왔을 때 기본적으로 모두 문자열( json이라면=>javascript 오브젝트 변경)
 			// 응답의 결과 (javascript 오브젝트) -> 함수의 파라미터로 전달
 		}).done(function(resp){
-			alert("회원가입이 완료되었습니다.");
-			console.log(resp); // UserApiController -> return(JSON으로 변환) -> resp
+			if(resp.status===500){
+				alert("중복된 아이디입니다. \n회원가입에 실패했습니다.")		
+			}else{
+				alert("회원가입이 완료되었습니다.");
+				console.log(resp); // UserApiController -> return(JSON으로 변환) -> resp
+				location.href="/";
+			}
+		}).fail(function(error){
+			alert(JSON.stringify(error));
+		});
+	},
+	
+	update: function(){
+
+		let data={
+			id: $("#id").val(),
+			username: $("#username").val(),
+			password: $("#password").val(),
+			email: $("#email").val()
+		};
+		
+		$.ajax({
+			type: "put",
+			url: "/user", 
+			data: JSON.stringify(data), 
+			contentType: "application/json; charset=utf-8", 
+			dataType: "json"
+		}).done(function(resp){
+			alert("회원 수정이 완료되었습니다.");
 			location.href="/";
 		}).fail(function(error){
 			alert(JSON.stringify(error));
 		});
+	},
+	
+	deleteById: function(){
+
+		let id = $("#id").text();
 		
+		$.ajax({
+			type: "delete",
+			url: "/user"+id, 
+			contentType: "application/json; charset=utf-8", 
+			dataType: "json"
+		}).done(function(resp){
+			alert("회원 탈퇴가 완료되었습니다.");
+			location.href="/";
+		}).fail(function(error){
+			alert(JSON.stringify(error));
+		});
 	}
+	
 } // 오브젝트
 // ->
 index.init(); // 함수 호출

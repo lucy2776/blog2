@@ -3,6 +3,7 @@ package com.cos.blog.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,6 +22,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private PrincipalDetailService principalDetailService;
 	
+	@Bean
+	@Override
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		
+		return super.authenticationManager();
+	}
+
 	@Bean // IoC (스프링이 관리, 필요할 때마다 가져와서 쓰면 됨)
 	public BCryptPasswordEncoder encodePWD() {
 		
@@ -44,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.csrf().disable() // csrf 토큰 비활성화 (테스트 시 .disable())
 			.authorizeRequests() // 어떤 요청이 들어오면
 //				.antMatchers("/auth/loginForm", "/auth/joinForm")
-				.antMatchers("/", "/auth/**", "/js/**", "/css/**", "/image/**") // 이 경로는 인증없이 들어올 수 있음
+				.antMatchers("/", "/auth/**", "/js/**", "/css/**", "/image/**", "/dummy/**") // 이 경로는 인증없이 들어올 수 있음
 				.permitAll()
 				.anyRequest() // 다른 모든 요청은
 				.authenticated() // 인증이 돼야 됨

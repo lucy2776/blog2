@@ -23,15 +23,15 @@ public class PrincipalDetail implements UserDetails{ // 추상 메서드 오버�
 	}
 
 	@Override
+	public String getUsername() {
+		
+		return user.getUsername();
+	}
+	
+	@Override
 	public String getPassword() {
 
 		return user.getPassword();
-	}
-
-	@Override
-	public String getUsername() {
-
-		return user.getUsername();
 	}
 
 	// 계정이 만료되지 않았는지 리턴 (true : 만료x)
@@ -40,18 +40,18 @@ public class PrincipalDetail implements UserDetails{ // 추상 메서드 오버�
 
 		return true;
 	}
+	
+	// 비밀번호가 만료되지 않았는지 리턴 (true : 만료x)
+	@Override
+	public boolean isCredentialsNonExpired() {
+		
+		return true;
+	}
 
 	// 계정이 잠겨있지 않았는지 리턴 (true : 잠김x) 
 	@Override
 	public boolean isAccountNonLocked() {
 
-		return true;
-	}
-
-	// 비밀번호가 만료되지 않았는지 리턴 (true : 만료x)
-	@Override
-	public boolean isCredentialsNonExpired() {
-		
 		return true;
 	}
 

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.blog.model.RoleType;
@@ -76,7 +75,7 @@ public class DummyControllerTest {
 	
 	// 한 페이지 당 2건의 데이터 리턴
 	@GetMapping("/dummy/user")
-	public List<User> pageList(@PageableDefault(size=2, sort="id", direction=Sort.Direction.DESC) Pageable pageable){
+	public Page<User> pageList(@PageableDefault(size=2, sort="id", direction=Sort.Direction.DESC) Pageable pageable){
 		// direction : 최신순
 		Page<User> pagingUser = userRepository.findAll(pageable);
 		
@@ -88,7 +87,7 @@ public class DummyControllerTest {
 //		}
 		List<User> users = pagingUser.getContent();
 		
-		return users;
+		return pagingUser;
 	}
 	
 	
